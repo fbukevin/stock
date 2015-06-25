@@ -96,11 +96,18 @@
 						success: function(response){           
 							console.log('(2330): ' + response[0]['l_cur']);
 							$('#price').text('TSMC(2330): ' + response[0]['l_cur']);
-							
+							$('button').click(function(){
+	    							$('#price').fadeTo(10, 1, function(){
+	    								$(this).css("background-color", "red");
+	    							}).fadeTo(100, 0, function(){
+	    								$(this).css("background-color", "white");
+	    							}).fadeTo(1, 1, function(){
+	    								$(this).css("background-color", "white");
+	    							});
+							});
 							if(current != (150-response[0]['l']))
 							{
 								current = (150 - parseFloat(response[0]['l'])); 
-								// "200 -"  是為了往上 concave up, 放大數值符合 scale (一個y區間是50，但變化區間很小只有1，所以放大變化數值50倍)
 								data.push(current);
 								if(data.length == 8){								
 									var v = data.shift();	
