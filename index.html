@@ -9,20 +9,24 @@
 	<div id="price">TSMC(2330): </div>
 
 	<script>
-		var current = 0;
-		setInterval(function() {		   
+		var current = [ 
+				{ "num": 2330, "name": "台積電", "price": 0 },
+				{ "num": 2201, "name": "裕隆", "price": 0 },
+				{ "num": 0050, "name": "台灣50", "price": 0 },
+				{ "num": 2412, "name": "中華電", "price": 0 },
+			];
+		var chage = function(stock_num){
 			$.ajax({
-
 				// The 'type' property sets the HTTP method.
 				// A value of 'PUT' or 'DELETE' will trigger a preflight request.
 				type: 'GET',
 
 				// The URL to make the request to.
-				url: 'https://finance.google.com/finance/info?client=ig&q=TPE:2330',
+				url: 'https://finance.google.com/finance/info?client=ig&q=TPE:' + stock_num,
 				dataType: 'jsonp',
 				cache: false,
 				success: function(response){           
-					console.log('(2330): ' + response[0]['l_cur']);
+					console.log('(' + stock_num + '): ' + response[0]['l_cur']);
 					$('#price').text('TSMC(2330): ' + response[0]['l_cur']);
    						
 					if(current < response[0]['l'])
@@ -50,8 +54,12 @@
 						current = response[0]['l']; 
 					}
 				}	 
-			});
+			});	
+		}
+
+		setInterval(function() {		   
+			
 		}, 2000);	
-		
+	
 	</script>
 </body>
