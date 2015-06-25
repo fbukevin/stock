@@ -96,17 +96,17 @@
 						success: function(response){           
 							console.log('(2330): ' + response[0]['l_cur']);
 							$('#price').text('TSMC(2330): ' + response[0]['l_cur']);
-							$('button').click(function(){
-	    							$('#price').fadeTo(10, 1, function(){
+	    					
+							if(current != (150-response[0]['l']))
+							{
+								$('#price').fadeTo(10, 1, function(){
 	    								$(this).css("background-color", "red");
-	    							}).fadeTo(100, 0, function(){
+	    							}).fadeTo(500, 0, function(){
 	    								$(this).css("background-color", "white");
 	    							}).fadeTo(1, 1, function(){
 	    								$(this).css("background-color", "white");
 	    							});
-							});
-							if(current != (150-response[0]['l']))
-							{
+
 								current = (150 - parseFloat(response[0]['l'])); 
 								data.push(current);
 								if(data.length == 8){								
