@@ -47,7 +47,7 @@
 					}
 					else if(stock.price > response[0]['l'])
 					{
-						$('#price').fadeTo(10, 1, function(){
+						$('#' + stock.name).fadeTo(10, 1, function(){
 							$(this).css("background-color", "green");
     						}).fadeTo(500, 0, function(){
 							$(this).css("background-color", "white");
