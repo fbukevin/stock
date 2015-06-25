@@ -25,7 +25,7 @@
 					console.log('(2330): ' + response[0]['l_cur']);
 					$('#price').text('TSMC(2330): ' + response[0]['l_cur']);
    						
-					if(current != (150-response[0]['l']))
+					if(current < response[0]['l'])
 					{
 						$('#price').fadeTo(10, 1, function(){
 							$(this).css("background-color", "red");
@@ -35,8 +35,20 @@
 							$(this).css("background-color", "white");
 						});
 	
-						current = (150 - parseFloat(response[0]['l'])); 
-					}	
+						current = response[0]['l']; 
+					}
+					else if(current > response[0]['l'])
+					{
+						$('#price').fadeTo(10, 1, function(){
+							$(this).css("background-color", "green");
+    						}).fadeTo(500, 0, function(){
+							$(this).css("background-color", "white");
+						}).fadeTo(1, 1, function(){
+							$(this).css("background-color", "white");
+						});
+	
+						current = response[0]['l']; 
+					}
 				}	 
 			});
 		}, 2000);	
