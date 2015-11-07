@@ -20,7 +20,12 @@
 				{ "number": '0050', "name": "台灣50", "price": '0', 'buy_price': '69.5' },
 				{ "number": '2412', "name": "中華電", "price": '0', 'buy_price': '97' },
 			];
-		var refresh = function(stock){
+            
+        var currencies = [
+                {"from": "USD", "to": "TWD"},
+                {"from": "JPY", "to": "TWD"}
+            ];
+		var refreshStock = function(stock){
 			$.ajax({
 				// The 'type' property sets the HTTP method.
 				// A value of 'PUT' or 'DELETE' will trigger a preflight request.
@@ -41,7 +46,7 @@
 						change_str = '--';
 					}
 
-					console.log('(' + stock.number + '): ' + response[0]['l_cur']);
+					//console.log('(' + stock.number + '): ' + response[0]['l_cur']); //debug
 					$('#' + stock.name).text('' + stock.name+ '(' + stock.number + '): ' 
 						+ response[0]['l_cur'] + '  [買價：' + stock.buy_price
 						+ '  漲跌：' + change_str + ']');
@@ -73,6 +78,26 @@
 				}	 
 			});	
 		}
+        
+        var refreshExchange = function(currency){
+            $.ajax({
+				// The 'type' property sets the HTTP method.
+				// A value of 'PUT' or 'DELETE' will trigger a preflight request.
+				type: 'GET',
+
+				// The URL to make the request to.
+				url: 'https://currency-api.appspot.com/api/'+currency.from + '/' + currency.to + '.jsonp',
+				dataType: 'jsonp', 
+				cache: false,
+				success: function(response){
+                    //response: Object {success: true, source: "JPY", target: "TWD", rate: 0.2655651, amount: 0.27, message: ""}
+                    if (response.success) { 
+                        $('#' + currency.from + '_' + currency.to)
+                            .text(currency.from + ' to ' + currency.to + ': ' + parseFloat(response.rate).toFixed(2));
+                    }
+                }
+            });
+        }
 
 		$(document).ready(function(){
 			for( var s in stocks ){
@@ -80,13 +105,22 @@
 				$('body').append('<div id="' + stocks[s].name + '" class="stocks">'  
 					+ stocks[s].name + '(' + stocks[s].number + '): '+'</div>');
 			}
+            
+            for( var c in currencies){
+                $('body').append('<div id="' + currencies[c].from + '_' + currencies[c].to + '" class="stocks">' 
+                    + currencies[c].from + ' to ' + currencies[c].to + ': ' + '</div>');
+            }
 		});
 
 		setInterval(function() {		   
 			for( var s in stocks ){
-				//console.log(stocks[s].number);
-				refresh(stocks[s]);
+				//console.log(stocks[s].number);  //debug
+				refreshStock(stocks[s]);
 			}
+            
+            for(var c in currencies){
+                refreshExchange(currencies[c]); 
+            }
 		}, 2000);	
 	
 	</script>
