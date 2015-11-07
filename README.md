@@ -8,7 +8,7 @@
 
 ##Response
 
-###NOTE that "//" makes this not real JSON
+*NOTE that "//" makes this not real JSON*
 
 ```
 // [ { "id": "674465" ,"t" : "2330" ,"e" : "TPE" ,"l" : "140.00" ,"l_fix" : "140.00" ,"l_cur" : "NT$140.00" ,"s": "0" ,"ltt":"1:30PM GMT+8" ,"lt" : "Nov 6, 1:30PM GMT+8" ,"lt_dts" : "2015-11-06T13:30:01Z" ,"c" : "-2.50" ,"c_fix" : "-2.50" ,"cp" : "-1.75" ,"cp_fix" : "-1.75" ,"ccol" : "chr" ,"pcls_fix" : "142.5" } ]
@@ -16,7 +16,7 @@
 
 #Google App Engine Currency API
 
-##Reqest
+##Request
 
 `https://currency-api.appspot.com/api/USD/TWD.json`
 
@@ -24,7 +24,7 @@
 
 `{"success":true,"source":"USD","target":"TWD","rate":32.707001,"amount":32.71,"message":""}`
 
-###//上方會有 server(resouce) no Access-Control-Allow-Origin 為 true 的 response header 設定，暫時改用 jsonp
+*上方會有 server(resouce) no Access-Control-Allow-Origin 為 true 的 response header 設定，暫時改用 jsonp*
 
 ##Request
 
