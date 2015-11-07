@@ -3,6 +3,7 @@
 	2. Dynamic add stocks.
 -->
 	<head>
+		<meta charset="utf8">
 		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 		<style type="text/css">
 			.stocks {
@@ -14,10 +15,10 @@
 
 	<script>
 		var stocks = [
-				{ "number": '2330', "name": "台積電", "price": '0' },
-				{ "number": '2201', "name": "裕隆", "price": '0' },
-				{ "number": '0050', "name": "台灣50", "price": '0' },
-				{ "number": '2412', "name": "中華電", "price": '0' },
+				{ "number": '1464', "name": "得力", "price": '0', 'buy_price': '31.45' },
+				{ "number": '2201', "name": "裕隆", "price": '0', 'buy_price': '35.85' },
+				{ "number": '0050', "name": "台灣50", "price": '0', 'buy_price': '69.5' },
+				{ "number": '2412', "name": "中華電", "price": '0', 'buy_price': '97' },
 			];
 		var refresh = function(stock){
 			$.ajax({
@@ -29,9 +30,21 @@
 				url: 'https://finance.google.com/finance/info?client=ig&q=TPE:' + stock.number,
 				dataType: 'jsonp',
 				cache: false,
-				success: function(response){           
+				success: function(response){
+					var change = (parseFloat(response[0]['l']) - parseFloat(stock.buy_price)).toFixed(2);
+					var change_str = '';
+					if(change > 0){
+						change_str = '+' + change + '元';
+					} else if(change < 0){
+						change_str = '-' + change + '元';
+					} else {
+						change_str = '--';
+					}
+
 					console.log('(' + stock.number + '): ' + response[0]['l_cur']);
-					$('#' + stock.name).text('' + stock.name+ '(' + stock.number + '): ' + response[0]['l_cur']);
+					$('#' + stock.name).text('' + stock.name+ '(' + stock.number + '): ' 
+						+ response[0]['l_cur'] + '  [買價：' + stock.buy_price
+						+ '  漲跌：' + change_str + ']');
    						
 					if(stock.price < response[0]['l'])
 					{
